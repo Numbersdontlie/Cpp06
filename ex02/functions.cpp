@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:03:15 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/06 01:12:26 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/06 01:20:45 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ void identify(Base &p){
         (void)dynamic_cast<A&>(p);
         std::cout << "A" << std::endl;
         return;
-    } catch (std::bad_cast&) {}
+    } catch (...) {}
 
     try{
-        (void)dynamic_cast<B&>(P);
+        (void)dynamic_cast<B&>(p);
         std::cout << "B" << std::endl;
         return;
-    } catch (std::bad_cast&) {}
+    } catch (...) {}
 
     try{
         (void)dynamic_cast<C&>(p);
         std::cout << "C" << std::endl;
         return;
-    } catch (std::bad_cast&) {}
+    } catch (...) {}
 
     std::cout << "Unknown type" << std::endl;
 }
