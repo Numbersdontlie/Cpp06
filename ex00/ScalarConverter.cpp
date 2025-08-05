@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 08:39:39 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/05 10:37:40 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:22:26 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ static void printDouble(double d){
         std::cout << d << "\n";
 }
 
+//helper function to check if a character is an integer
+//static bool isInteger(double value){
+//    if (std::isnan(value) || std::isinf(value))
+//        return false;
+//    double intPart;
+//    return (std::fabs(std::modf(value, &intPart)) < 1e-6);
+//}
+
 //interprets a string as a double (it discard any whitespace at the beginning and end of the string)
 static double ft_stod(const std::string &str){
     char *end;
@@ -38,8 +46,12 @@ static double ft_stod(const std::string &str){
 }
 
 //interprets a string as a float (it discard any whitespace at the beginning and end of the string)
-float ft_stof(const std::string &str){
-    return static_cast<float>(ft_stod(str));
+static float ft_stof(const std::string &str){
+    char *end;
+    double value = std::strtof(str.c_str(), &end);
+    if (*end != '\0')
+        throw std::invalid_argument("Invalid float");
+    return (value);
 }
 
 //converter function it takes a string as parameter
@@ -56,38 +68,70 @@ void ScalarConverter::convert(const std::string &literal) {
         return;
     }
     //handle pseudoliterals
-    if(literal == "nan" || literal == "+inf" || literal == "-inf"){
-        std::cout << "char: impossible\n";
-        std::cout << "int: impossible\n";
-        std::cout << "float: " << literal << "f\n";
-        std::cout << "double: " << literal << "\n";
-        return;
+    const std::string pseudoF[3] = {"nanf", "+inff", "-inff"};
+    const std::string pseudoD[3] = {"nan", "+inf", "-inf"};
+    for (int i = 0; i < 3; i++){
+        if (literal == pseudoF[i]) {
+            std::cout << "char: impossible\n";
+            std::cout << "int: impossible\n";
+            std::cout << "float: " << literal << "\n";
+            std::cout << "double: " << literal.substr(0, literal.size() -1) << "\n";
+            return;
+        }
+        if (literal == pseudoD[i]) {
+            std::cout << "char: impossible\n";
+            std::cout << "int: impossible\n";
+            std::cout << "float: " << literal << "f\n";
+            std::cout << "double: " << literal << "\n";
+            return;
+        }
     }
     try {
         //detect float ending with f
-        if(literal[literal.size() -1] == 'f'){
+        if(literal[literal.size() -1] == 'f' && literal.find('.') != std::string::npos) {
             float f = ft_stof(literal.substr(0, literal.size() - 1));
-            if (std::isprint(static_cast<int>(f)))
+
+            //char
+            if (f >= 0 && f <= 127 && std::isprint(static_cast<int>(f)))
                 std::cout << "char: '" << static_cast<char>(f) << "'\n";
-            else
+            else if (f >= 0 || f <= 127)
                 std::cout << "char: Non displayable\n";
-            std::cout << "int: " <<static_cast<int>(f) << "\n";
+            else
+                std::cout << "char: impossible\n";
+            
+            //int
+            if(f >= INT_MIN || f <= INT_MAX)
+                std::cout << "int: " << static_cast<int>(f) << "\n";
+            else
+                std::cout << "int: impossible\n";
+
+            //float and double
             printFloat(f);
             printDouble(static_cast<double>(f));
         }
         else {
             //treat as double/int
             double d = ft_stod(literal);
-            if(std::isprint(static_cast<int>(d)))
+            
+            //char
+            if(d >= 0 && d <= 127 && std::isprint(static_cast<int>(d)))
                 std::cout << "char: '" << static_cast<char>(d) << "'\n";
-            else
+            else if (d >= 0 || d <= 127)
                 std::cout << "char: Non displayable\n";
-            std::cout << "int: " << static_cast<int>(d) << "\n";
+            else
+                std::cout << "char: impossible\n";
+            
+            //int
+            if (d >= INT_MIN && d <= INT_MAX)
+                std::cout << "int: " << static_cast<int>(d) << "\n";
+            else
+                std::cout << "int: impossible\n";
+            //float and double
             printFloat(static_cast<float>(d));
             printDouble(d);
         }
     }
-    catch (std::exception &e){
+    catch (...){
         std::cout << "char: impossible\n";
         std::cout << "int: impossible\n";
         std::cout << "float: impossible\n";

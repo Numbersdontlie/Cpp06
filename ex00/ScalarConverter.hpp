@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 08:38:13 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/05 10:34:21 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:21:51 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <limits>
+#include <climits>
 #include <cmath>
 #include <cstdlib>
 
