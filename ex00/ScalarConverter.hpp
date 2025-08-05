@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 08:38:13 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/05 10:13:42 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/05 10:34:21 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCALARCONVERTER_HPP
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <limits>
 #include <cmath>

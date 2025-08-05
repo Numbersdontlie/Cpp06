@@ -6,11 +6,27 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 08:39:39 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/05 10:13:44 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/05 10:37:40 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+
+//helper function to print float
+static void printFloat(float f){
+    if(f == static_cast<long>(f))
+        std::cout << std::fixed << std::setprecision(1) << f << "f\n";
+    else
+        std::cout << f << "f\n";
+}
+
+//helper function to print double
+static void printDouble(double d){
+    if(d == static_cast<long>(d))
+        std::cout << std::fixed << std::setprecision(1) << d << "\n";
+    else
+        std::cout << d << "\n";
+}
 
 //interprets a string as a double (it discard any whitespace at the beginning and end of the string)
 static double ft_stod(const std::string &str){
@@ -35,8 +51,8 @@ void ScalarConverter::convert(const std::string &literal) {
         char c = literal[1];
         std::cout << "char: '" << c << "'\n";
         std::cout << "int: " << static_cast<int>(c) << "\n";
-        std::cout << "float: " << static_cast<float>(c) << "f\n";
-        std::cout << "double: " << static_cast<double>(c) << "\n";
+        printFloat(static_cast<float>(c));
+        printDouble(static_cast<double>(c));
         return;
     }
     //handle pseudoliterals
@@ -56,8 +72,8 @@ void ScalarConverter::convert(const std::string &literal) {
             else
                 std::cout << "char: Non displayable\n";
             std::cout << "int: " <<static_cast<int>(f) << "\n";
-            std::cout << "float: " << f << "f\n";
-            std::cout << "double: " << static_cast<double>(f) << "\n";
+            printFloat(f);
+            printDouble(static_cast<double>(f));
         }
         else {
             //treat as double/int
@@ -67,8 +83,8 @@ void ScalarConverter::convert(const std::string &literal) {
             else
                 std::cout << "char: Non displayable\n";
             std::cout << "int: " << static_cast<int>(d) << "\n";
-            std::cout << "float: " << static_cast<float>(d) << "f\n";
-            std::cout << "double: " << d << "\n";
+            printFloat(static_cast<float>(d));
+            printDouble(d);
         }
     }
     catch (std::exception &e){
