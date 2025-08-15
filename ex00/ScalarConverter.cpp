@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 08:39:39 by luifer            #+#    #+#             */
-/*   Updated: 2025/08/05 12:22:26 by luifer           ###   ########.fr       */
+/*   Updated: 2025/08/16 01:07:14 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void printFloat(float f){
     if(f == static_cast<long>(f))
         std::cout << std::fixed << std::setprecision(1) << f << "f\n";
     else
-        std::cout << f << "f\n";
+        std::cout << "float: " << f << "f\n";
 }
 
 //helper function to print double
@@ -25,7 +25,7 @@ static void printDouble(double d){
     if(d == static_cast<long>(d))
         std::cout << std::fixed << std::setprecision(1) << d << "\n";
     else
-        std::cout << d << "\n";
+        std::cout << "double: " << d << "\n";
 }
 
 //helper function to check if a character is an integer
@@ -45,7 +45,9 @@ static double ft_stod(const std::string &str){
     return (value);
 }
 
-//interprets a string as a float (it discard any whitespace at the beginning and end of the string)
+//interprets a string as a float. It discard any whitespace until the 1st non-whitespace char
+//is found, then from there it takes as many characters as possible that are valid following
+//a syntax resembling that of folating point literals, and interprets them as numerical values
 static float ft_stof(const std::string &str){
     char *end;
     double value = std::strtof(str.c_str(), &end);
